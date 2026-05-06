@@ -2,3 +2,12 @@ data/raw/
 data/staging/
 data/warehouse/
 *.sqlite
+
+.DS_Store
+**/.DS_Store
+
+__pycache__/
+*.pyc
+.env
+
+.ipynb_checkpoints/
