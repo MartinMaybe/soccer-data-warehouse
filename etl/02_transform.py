@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from lxml import etree
 
 print("Loading staged data...")
 
@@ -49,6 +50,17 @@ dim_date = dim_date.drop_duplicates(subset=["match_date"]) # removes dupes
 dim_date = dim_date.reset_index(drop=True) # resets to fill gaps from removed dupes
 dim_date.insert(0, "date_id", dim_date["match_date"].astype(str).str.replace("-", "").astype(int)) # 2008-08-17 --> 20080817 as primary key
 
+# Handle xml from stats (shoton, shotoff, etc)
+def parse_xml_count(xml_string, tag):
+    """Extract count of events from XML string"""
+    try:
+        if pd.isna(xml_string) or not str(xml_string).strip().startswith("<"):
+            return None
+        root = etree.fromstring(f"<root>{xml_string}</root>")
+        return len(root.findall(".//value"))
+    except:
+        return None
+
 # fact_match
 print("Transforming fact_match...")
 fact_match = df_match[[
@@ -57,6 +69,14 @@ fact_match = df_match[[
     "home_team_goal", "away_team_goal", "shoton", "shotoff",
     "foulcommit", "corner", "possession"
 ]].copy()
+
+# Pase XML columns into counts
+print("   Parsing XML columns...")
+fact_match["shoton"]    = fact_match["shoton"].apply(lambda x: parse_xml_count(x, "shoton"))
+fact_match["shotoff"]   = fact_match["shotoff"].apply(lambda x: parse_xml_count(x, "shotoff"))
+fact_match["foulcommit"] = fact_match["foulcommit"].apply(lambda x: parse_xml_count(x, "foulcommit"))
+fact_match["corner"] = fact_match["corner"].apply(lambda x: parse_xml_count(x, "corner"))
+fact_match["possession"] = fact_match["possession"].apply(lambda x: parse_xml_count(x, "possession"))
 
 fact_match["date_id"] = pd.to_datetime(fact_match["date"]).dt.strftime("%Y%m%d").astype(int)
 fact_match = fact_match.drop(columns=["date"])
