@@ -1,3 +1,27 @@
+"""
+    This script performs the transformation step of the ETL process 
+    for the soccer dataset. It reads the staged CSV files, transforms 
+    them into dimensional tables and a fact table (fact_match), and 
+    saves the transformed data back to CSV files in the warehouse folder.
+
+    Input:      data/staging/*.csv
+    Output:     data/warehouse/*.csv
+
+    Tables Produced:
+        - dim_country   → data/warehouse/dim_country.csv
+        - dim_league    → data/warehouse/dim_league.csv
+        - dim_team      → data/warehouse/dim_team.csv
+        - dim_player    → data/warehouse/dim_player.csv
+        - dim_date      → data/warehouse/dim_date.csv
+        - fact_match    → data/warehouse/fact_match.csv
+
+    Usage:
+        python3 etl/02_transform.py
+
+    Dependencies:
+        - pandas
+        - lxml
+"""
 import pandas as pd
 import os
 from lxml import etree

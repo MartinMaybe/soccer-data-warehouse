@@ -1,3 +1,25 @@
+/*
+02_create_facts.sql - Fact Table DDL
+======================================
+Creates the fact table for the soccer_dw star schema.
+
+Must be run after 01_create_dimensions.sql since fact_match
+contains foreign key references to all dimension tables.
+
+Tables Created:
+    - fact_match    One row per match containing goals, shots,
+                    fouls, corners, and foreign keys to all
+                    dimension tables.
+
+Foreign Keys:
+    - date_id           dim_date(date_id)
+    - country_id        dim_country(country_id)
+    - league_id         dim_league(league_id)
+    - home_team_api_id  dim_team(team_api_id)
+    - away_team_api_id  dim_team(team_api_id)
+
+*/
+
 -- Fact Match --
 CREATE TABLE IF NOT EXISTS fact_match (
     match_api_id        INTEGER PRIMARY KEY,

@@ -1,3 +1,28 @@
+""" 
+    This script extracts data from the SQLite database 
+    and saves it as CSV files to the staging directory
+    (data/staging/). This is the first step in the ETL 
+    process, where we move the raw data into a format 
+    that can be easily transformed.
+
+    Source:     data/raw/database.sqlite (Kaggle European Soccer Database)
+    Output:     data/staging/*.csv
+
+    Tables Extracted:
+        - Match:    data/staging/match.csv
+        - Team:     data/staging/team.csv
+        - Player:   data/staging/player.csv
+        - League:   data/staging/league.csv
+        - Country:  data/staging/country.csv
+    
+    Usage:
+    python3 etl/01_extract.py
+
+    Dependencies:
+        - sqlite3
+        - pandas
+"""
+
 import sqlite3
 import pandas as pd
 import os

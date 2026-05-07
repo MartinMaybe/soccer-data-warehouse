@@ -1,3 +1,26 @@
+/*
+01_create_dimensions.sql - Dimension Table DDL
+===============================================
+Creates all dimension tables for the soccer_dw star schema.
+
+Must be run BEFORE 02_create_facts.sql since fact_match contains
+foreign key references to these dimension tables.
+
+Tables Created:
+    - dim_country   Country reference data
+    - dim_league    League names linked to country
+    - dim_team      Team names and API identifiers
+    - dim_player    Player profiles including DOB, height, weight
+    - dim_date      Date spine with year, month, quarter, day of week
+
+All CREATE TABLE statements use IF NOT EXISTS so this script
+can be re-run safely without errors.
+
+Run Order:
+    1. sql/01_create_dimensions.sql
+    2. sql/02_create_facts.sql
+*/
+
 -- Country --
 CREATE TABLE IF NOT EXISTS dim_country (
     country_id      INTEGER PRIMARY KEY,
