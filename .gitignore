@@ -9,5 +9,6 @@ data/warehouse/
 __pycache__/
 *.pyc
 .env
+config.py
 
 .ipynb_checkpoints/
