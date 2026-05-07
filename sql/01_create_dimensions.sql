@@ -1,11 +1,11 @@
 -- Country --
-CREATE TABLE dim_country (
+CREATE TABLE IF NOT EXISTS dim_country (
     country_id      INTEGER PRIMARY KEY,
     country_name    VARCHAR(100) NOT NULL
 );
 
 -- League --
-CREATE TABLE dim_league (
+CREATE TABLE IF NOT EXISTS dim_league (
     league_id   INTEGER PRIMARY KEY,
     league_name VARCHAR(100) NOT NULL,
     country_id  INTEGER NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE dim_league (
 );
 
 -- Team --
-CREATE TABLE dim_team (
+CREATE TABLE IF NOT EXISTS dim_team (
     team_api_id         INTEGER PRIMARY KEY,
     team_fifa_api_id    INTEGER, 
     team_long_name      VARCHAR(100) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE dim_team (
 );
 
 -- Player --
-CREATE TABLE dim_player (
+CREATE TABLE IF NOT EXISTS dim_player (
     player_api_id       INTEGER PRIMARY KEY,
     player_name         VARCHAR(150) NOT NULL,
     player_fifa_api_id  INTEGER,
@@ -31,7 +31,7 @@ CREATE TABLE dim_player (
 );
 
 -- Date --
-CREATE TABLE dim_date (
+CREATE TABLE IF NOT EXISTS dim_date (
     date_id     INTEGER PRIMARY KEY,
     match_date  DATE NOT NULL,
     year        INTEGER NOT NULL,
@@ -42,30 +42,3 @@ CREATE TABLE dim_date (
     day_of_week VARCHAR(20) NOT NULL,
     season      VARCHAR(20) NOT NULL
 );
-
--- Fact Match --
-CREATE TABLE fact_match (
-    match_api_id        INTEGER PRIMARY KEY,
-    date_id             INTEGER NOT NULL,
-    country_id          INTEGER NOT NULL,
-    league_id           INTEGER NOT NULL,
-    season              VARCHAR(20) NOT NULL,
-    stage               INTEGER NOT NULL,
-    home_team_api_id    INTEGER NOT NULL,
-    away_team_api_id    INTEGER NOT NULL,
-    home_team_goal      INTEGER NOT NULL,
-    away_team_goal      INTEGER NOT NULL,
-    shoton              INTEGER,
-    shotoff             INTEGER,
-    foulcommit          INTEGER,
-    corner              INTEGER,
-    possession          DECIMAL(5,2),
-    FOREIGN KEY (country_id) REFERENCES dim_country(country_id),
-    FOREIGN KEY (league_id) REFERENCES dim_league(league_id),
-    FOREIGN KEY (home_team_api_id) REFERENCES dim_team(team_api_id),
-    FOREIGN KEY (away_team_api_id) REFERENCES dim_team(team_api_id),
-    FOREIGN KEY (date_id) REFERENCES dim_date(date_id)
-);
-
-
-
