@@ -135,7 +135,16 @@ CREATE DATABASE soccer_dw;
 \i sql/02_create_facts.sql
 ```
 
-5. Run the ETL pipeline
+5. Create a `.env` file in the project root with your PostgreSQL credentials:
+```
+PG_USER=postgres
+PG_PASSWORD=yourpassword
+PG_HOST=localhost
+PG_PORT=5432
+PG_DATABASE=soccer_dw
+```
+
+6. Run the ETL pipeline
 ```bash
 python3 etl/01_extract.py
 python3 etl/02_transform.py
@@ -175,6 +184,16 @@ FROM fact_match
 GROUP BY season
 ORDER BY season;
 ```
+
+---
+
+## Dashboard Preview
+
+### League Overview
+![League Overview](dashboards/screenshots/page1_league_overview.png)
+
+### Team Performance
+![Team Performance](dashboards/screenshots/page2_team_performance.png)
 
 ---
 
