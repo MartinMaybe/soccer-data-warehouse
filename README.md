@@ -189,11 +189,7 @@ ORDER BY season;
 
 ## Dashboard Preview
 
-### League Overview
-![League Overview](dashboards/screenshots/page1_league_overview.png)
-
-### Team Performance
-![Team Performance](dashboards/screenshots/page2_team_performance.png)
+![Preview](dashboards/soccer_dashboard.pdf)
 
 ---
 
